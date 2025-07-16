@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes bounce-slow {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px); /* Adjust this value for bounce height */
+    }
+  }
+  
+  .animate-bounce-slow {
+    animation: bounce-slow 2s infinite ease-in-out; /* Adjust 2s for bounce speed */
+  }
+
+  .company-btn.active {
+    border-left: 4px solid theme('colors.purple.600');
+    padding-left: 12px;
+}
