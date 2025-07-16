@@ -1,11 +1,169 @@
-<!doctype html>
-<html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="output.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script src="https://unpkg.com/feather-icons"></script> 
+  <style>
+    /* Ensure html and body take full height of the viewport */
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Keyframe for fading in and moving up */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    /* Keyframe for fading out and moving down */
+    @keyframes fadeOutDown {
+      from {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      to {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+    }
+
+    /* Apply animations to modal content */
+    #cv-modal .modal-content.animate-in {
+      animation: fadeInUp 0.3s ease-out forwards;
+    }
+    #cv-modal .modal-content.animate-out {
+      animation: fadeOutDown 0.3s ease-in forwards;
+    }
+
+    /* Base styles for the modal overlay (full screen, centered) */
+    #cv-modal {
+      position: fixed; /* Fixes it relative to the viewport */
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0; /* Ensures it covers the entire screen */
+      z-index: 9999; /* High z-index to be on top */
+      display: flex; /* Use flexbox for centering */
+      align-items: center; /* Vertically center content */
+      justify-content: center; /* Horizontally center content */
+      background-color: transparent; /* Start transparent */
+      backdrop-filter: blur(0px); /* Start no blur */
+      opacity: 0; /* Start invisible */
+      visibility: hidden; /* Start hidden for accessibility/initial state */
+      transition: opacity 0.3s ease-in-out, background-color 0.3s ease-in-out, backdrop-filter 0.3s ease-in-out, visibility 0s linear 0.3s; /* visibility changes after opacity */
+    }
+
+    /* State when modal is actively showing */
+    #cv-modal.showing {
+      opacity: 1;
+      visibility: visible;
+      background-color: rgba(0, 0, 0, 0.2); /* Semi-transparent dark overlay */
+      backdrop-filter: blur(10px);
+      transition: opacity 0.3s ease-in-out, background-color 0.3s ease-in-out, backdrop-filter 0.3s ease-in-out, visibility 0s linear 0s; /* visibility changes immediately */
+    }
+
+    /* Modal Content Styling */
+    #cv-modal .modal-content {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      padding: 40px; /* Increased padding for better spacing */
+      max-width: 400px; /* Adjusted max-width for a more spacious look */
+      width: 90%; /* Ensures it's responsive on smaller screens */
+      text-align: left; /* Align text to the left as per the design */
+      box-sizing: border-box; /* Include padding in width/height calculation */
+      position: relative; /* Needed for absolute positioning of close icon */
+    }
+
+    /* Ensure modal content doesn't exceed viewport height on small screens if content is long */
+    @media (max-height: 500px) { /* Adjust this breakpoint as needed */
+      #cv-modal .modal-content {
+        max-height: 90vh; /* Max height of 90% viewport height */
+        overflow-y: auto; /* Add scroll if content overflows */
+      }
+    }
+
+
+    #cv-modal h2 {
+      font-size: 1.75rem; /* Slightly smaller title for a modern look */
+      font-weight: 600; /* Semi-bold */
+      color: #374151; /* Darker gray for headings */
+      margin-bottom: 20px; /* Space below the title */
+    }
+
+    #cv-modal p {
+      color: #6b7280; /* Medium gray for body text */
+      margin-bottom: 30px; /* More space below the paragraph before buttons */
+      line-height: 1.6; /* Improved readability */
+    }
+
+    #cv-modal .flex-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px; /* Increased gap between buttons for better spacing */
+    }
+
+    /* Button styling for both View CV and Download CV */
+    #cv-modal a {
+      display: inline-flex; /* Allows text and potentially icons to be inline */
+      align-items: center;
+      justify-content: center;
+      padding: 14px 24px; /* Increased padding for larger touch targets */
+      border-radius: 0px; /* Slightly more rounded corners */
+      font-weight: 600; /* Bold font weight for buttons */
+      text-align: center;
+      text-decoration: none; /* Remove underline from links */
+      transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, transform 0.2s ease-in-out;
+      font-size: 1.05rem; /* Slightly larger font size for buttons */
+    }
+
+    /* Specific style for the 'View CV' button */
+    #cv-modal a:first-child {
+      background-color: #6d28d9; /* Deep purple */
+      color: #fff;
+    }
+    #cv-modal a:first-child:hover {
+      background-color: #5b21b6; /* Darker purple on hover */
+      transform: translateY(-2px); /* Subtle lift effect */
+    }
+
+    /* Specific style for the 'Download CV' button */
+    #cv-modal a:last-child {
+      border: 1px solid #6d28d9; /* Purple border */
+      color: #6d28d9; /* Purple text */
+      background-color: #fff; /* White background */
+    }
+    #cv-modal a:last-child:hover {
+      background-color: #f3e8ff; /* Very light purple on hover */
+      color: #5b21b6; /* Darker purple text on hover */
+      transform: translateY(-2px); /* Subtle lift effect */
+    }
+
+    /* Close Button Styling (the 'X' icon) */
+    .close-icon {
+      position: absolute;
+      top: 15px; /* Adjust top position */
+      right: 15px; /* Adjust right position */
+      cursor: pointer;
+      font-size: 1.8rem; /* A good size for the close 'X' */
+      color: #9ca3af; /* Light gray for subtle appearance */
+      transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+      z-index: 10; /* Ensure it's above other content */
+      line-height: 1; /* Helps vertically center the 'X' character */
+    }
+    .close-icon:hover {
+      color: #6b7280; /* Darker gray on hover */
+      transform: scale(1.1); /* Subtle grow effect on hover */
+    }
+  </style>
 </head>
 <body class="font-sans">
 
@@ -13,20 +171,17 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-1">
       <div class="flex items-center justify-between h-16">
         <div class="flex items-center">
-          <div class="flex-shrink-0">
-            <a href="#"><img class="h-10 w-auto" src="zdan-logo.png" alt="Logo"></a> 
-          </div>
+          <a href="#"><img class="h-10 w-auto" src="zdan-logo.png" alt="Logo"></a> 
         </div>
         <div class="flex items-center">
           <div class="hidden md:flex space-x-4">
             <a href="#about" class="text-gray-800 hover:text-gray-600 uppercase">About</a>
             <a href="#projects" class="text-gray-800 hover:text-gray-600 uppercase">Work</a>
             <a href="#contact" class="text-gray-800 hover:text-gray-600 uppercase">Contact</a>
+            <a href="#" id="cv-btn" class="text-gray-800 hover:text-gray-600 uppercase">CV</a>
           </div>
           <div class="-mr-2 flex md:hidden">
             <button id="mobile-menu-button" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-800 hover:text-gray-600 focus:outline-none">
-              <span class="sr-only">Toggle menu</span>
-              <!-- Icons -->
               <svg id="icon-hamburger" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
               </svg>
@@ -44,101 +199,110 @@
         <a href="#about" class="block px-4 py-2 text-base font-medium text-gray-800 uppercase hover:bg-gray-100">About</a>
         <a href="#projects" class="block px-4 py-2 text-base font-medium text-gray-800 uppercase hover:bg-gray-100">Work</a>
         <a href="#contact" class="block px-4 py-2 text-base font-medium text-gray-800 uppercase hover:bg-gray-100">Contact</a>
+        <a href="#" id="cv-btn-mobile" class="block px-4 py-2 text-base font-medium text-gray-800 uppercase hover:bg-gray-100">CV</a>
       </div>
     </div>
   </nav>
 
-
-  <!-- body -->
-  <main class="py-24 flex items-center justify-center bg-gray-100">
-    <div class="text-center px-4 md:px-16 lg:px-40">
-      <h1 class="text-md md:text-lg text-gray-800 mb-4 uppercase opacity-0 transform translate-y-8 transition-opacity transition-transform duration-1000 ease-out tracking-widest" data-animate="fade-in-up" id="title">freative Developer</h1>
-      <p class="text-4xl md:text-8xl text-gray-600 mb-6 opacity-0 transform translate-y-8 transition-opacity transition-transform duration-1000 ease-out delay-200" data-animate="fade-in-up" data-delay="200" id="subtitle">Crafting Digital Experiences Through Code & Design</p>
-      <p class="text-gray-600 mb-8 opacity-0 transform translate-y-8 transition-opacity transition-transform duration-1000 ease-out delay-400" data-animate="fade-in-up" data-delay="400" id="description">Building immersive web experiences that push the boundaries of what's possible</p>
-      <div class="flex justify-center space-x-4 opacity-0 transform translate-y-8 transition-opacity transition-transform duration-1000 ease-out delay-600" data-animate="fade-in-up" data-delay="600" id="buttons">
-        <a href="#projects" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 font-semibold">View Work</a>
-        <a href="#contact" class="border border-purple-600 text-purple-600 hover:bg-purple-100 px-6 py-3 font-semibold">Get in Touch</a>
-      </div>
-
-      <div class="mt-18 py-6 flex flex-col items-center" data-animate="fade-in-up" data-delay="800">
-        <p class="text-sm text-gray-800 uppercase tracking-widest animate-bounce-slow" id="scroll-text">scroll</p>
-        <div class="h-12 bg-gray-800 mt-2 animate-bounce-slow" style="width: 1px;"></div>
-      </div>
-    </div>
-  </main>
-
-
-  <!-- about -->
-  <section id="about" class="bg-white py-16 px-4 md:px-16 lg:px-40" data-animate="fade-in-up">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
-      <div class="text-left">
-        <h2 class="text-md md:text-lg text-gray-800 mb-4 uppercase tracking-widest">About Me</h2>
-        <ul class="space-y-2 mb-6">
-          <li class="flex items-center">
-            <p class="text-4xl md:text-7xl text-gray-600">Hi, I'm</p>
-          </li>
-          <li class="flex items-center">
-            <p class="text-4xl md:text-7xl text-purple-600">DanielKeme</p>
-          </li>
-          <li class="flex items-center pt-8">
-            <i class="fas fa-map-marker-alt mr-2 w-6 text-purple-600"></i>
-            <p class="text-lg text-gray-600">Based in Abuja, Nigeria</p>
-          </li>
-          <li class="flex items-center">
-            <i class="fas fa-code mr-2 w-6 text-purple-600"></i>
-            <p class="text-lg text-gray-600">Full-stack developer</p>
-          </li>
-          <li class="flex items-center">
-            <i class="fas fa-briefcase mr-2 w-6 text-purple-600"></i>
-            <p class="text-lg text-gray-600">2+ years of experience</p>
-          </li>
-        </ul>
-        <p class="text-gray-600 mb-8">I specialize in building modern web applications using a variety of technologies. My passion lies in creating user-friendly and efficient solutions that solve real-world problems.</p>
-        <div class="flex space-x-4 mb-8">
-          <a href="#contact" class="border border-purple-600 text-purple-600 hover:bg-purple-100 px-6 py-3 font-semibold">Get in Touch</a>
-          <a href="#projects" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 font-semibold">View Projects</a>
-        </div>
-      </div>
-
-      <div class="text-left md:pt-18 md:pl-30" data-animate="fade-in-up" data-delay="200">
-        <p class="text-gray-600 mb-6 font-semibold text-2xl">Technologies I have been working with:</p>
-        <div class="grid grid-cols-1 gap-6">
-            <div data-animate="fade-in-up" data-delay="200">
-                <h3 class="text-purple-600 font-semibold mb-2">Languages</h3>
-                <div class="flex flex-wrap gap-2 w-full">
-                    <button class="bg-purple-100 text-purple-700 rounded-full px-4 py-2 text-sm font-medium border border-purple-700 hover:border-purple-300 transition-colors duration-300">JavaScript</button>
-                    <button class="bg-purple-100 text-purple-700 rounded-full px-4 py-2 text-sm font-medium border border-purple-700 hover:border-purple-300 transition-colors duration-300">TypeScript</button>
-                    <button class="bg-purple-100 text-purple-700 rounded-full px-4 py-2 text-sm font-medium border border-purple-700 hover:border-purple-300 transition-colors duration-300">Python</button>
-                    <button class="bg-purple-100 text-purple-700 rounded-full px-4 py-2 text-sm font-medium border border-purple-700 hover:border-purple-300 transition-colors duration-300">CSS</button>
-                    <button class="bg-purple-100 text-purple-700 rounded-full px-4 py-2 text-sm font-medium border border-purple-700 hover:border-purple-300 transition-colors duration-300">HTML</button>
-                </div>
-            </div>
-            <div data-animate="fade-in-up" data-delay="300">
-                <h3 class="text-purple-600 font-semibold mb-2">Libraries & Frameworks</h3>
-                <div class="flex flex-wrap gap-2 w-full">
-                    <button class="bg-purple-100 text-purple-700 rounded-full px-4 py-2 text-sm font-medium border border-purple-700 hover:border-purple-300 transition-colors duration-300">React</button>
-                    <button class="bg-purple-100 text-purple-700 rounded-full px-4 py-2 text-sm font-medium border border-purple-700 hover:border-purple-300 transition-colors duration-300">Next.js</button>
-                    <button class="bg-purple-100 text-purple-700 rounded-full px-4 py-2 text-sm font-medium border border-purple-700 hover:border-purple-300 transition-colors duration-300">Gatsby</button>
-                    <button class="bg-purple-100 text-purple-700 rounded-full px-4 py-2 text-sm font-medium border border-purple-700 hover:border-purple-300 transition-colors duration-300">React Native</button>
-                    <button class="bg-purple-100 text-purple-700 rounded-full px-4 py-2 text-sm font-medium border border-purple-700 hover:border-purple-300 transition-colors duration-300">Tailwind</button>
-                </div>
-            </div>
-            <div data-animate="fade-in-up" data-delay="400">
-                <h3 class="text-purple-600 font-semibold mb-2">Tools & Platforms</h3>
-                <div class="flex flex-wrap gap-2 w-full">
-                    <button class="bg-purple-100 text-purple-700 rounded-full px-4 py-2 text-sm font-medium border border-purple-700 hover:border-purple-300 transition-colors duration-300">Git</button>
-                    <button class="bg-purple-100 text-purple-700 rounded-full px-4 py-2 text-sm font-medium border border-purple-700 hover:border-purple-300 transition-colors duration-300">GitHub</button>
-                    <button class="bg-purple-100 text-purple-700 rounded-full px-4 py-2 text-sm font-medium border border-purple-700 hover:border-purple-300 transition-colors duration-300">Netlify</button>
-                    <button class="bg-purple-100 text-purple-700 rounded-full px-4 py-2 text-sm font-medium border border-purple-700 hover:border-purple-300 transition-colors duration-300">WordPress</button>
-                    <button class="bg-purple-100 text-purple-700 rounded-full px-4 py-2 text-sm font-medium border border-purple-700 hover:border-purple-300 transition-colors duration-300">Figma</button>
-                </div>
-            </div>
+  <div id="cv-modal" class="fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-300 hidden">
+    <div class="modal-content relative rounded-2xl shadow-2xl">
+        <div id="close-cv-modal" class="close-icon">&times;</div>
+        <h2>CV Options</h2>
+        <p>Would you like to view or download my CV?</p>
+        <div class="flex flex-col gap-6">
+            <a href="cv.pdf" target="_blank">View CV</a>
+            <a href="cv.pdf" download>Download CV</a>
         </div>
     </div>
-  </section>
+</div>
 
 
-<!-- experience -->
+<main class="py-24 flex items-center justify-center bg-white">
+  <div class="text-center px-4 md:px-16 lg:px-40">
+    <h1 class="text-md md:text-lg text-[#374151] mb-4 uppercase opacity-0 transform translate-y-8 transition-opacity transition-transform duration-1000 ease-out tracking-widest" data-animate="fade-in-up" id="title">
+      Creative Developer
+    </h1>
+    <p class="text-4xl md:text-8xl text-[#6b7280] mb-6 opacity-0 transform translate-y-8 transition-opacity transition-transform duration-1000 ease-out delay-200" data-animate="fade-in-up" data-delay="200" id="subtitle">
+      Crafting Digital Experiences Through Code & Design
+    </p>
+    <p class="text-[#6b7280] mb-8 opacity-0 transform translate-y-8 transition-opacity transition-transform duration-1000 ease-out delay-400" data-animate="fade-in-up" data-delay="400" id="description">
+      Building immersive web experiences that push the boundaries of what's possible
+    </p>
+    <div class="flex justify-center space-x-4 opacity-0 transform translate-y-8 transition-opacity transition-transform duration-1000 ease-out delay-600" data-animate="fade-in-up" data-delay="600" id="buttons">
+      <a href="#projects" class="bg-[#6d28d9] hover:bg-[#5b21b6] text-white px-6 py-3 font-semibold transition duration-300">View Work</a>
+      <a href="#contact" class="border border-[#6d28d9] text-[#6d28d9] hover:bg-[#f3e8ff] px-6 py-3 font-semibold  transition duration-300">Get in Touch</a>
+    </div>
+
+    <div class="mt-18 py-6 flex flex-col items-center" data-animate="fade-in-up" data-delay="800">
+      <p class="text-sm text-[#374151] uppercase tracking-widest animate-bounce-slow" id="scroll-text">scroll</p>
+      <div class="h-12 bg-[#374151] mt-2 animate-bounce-slow" style="width: 1px;"></div>
+    </div>
+  </div>
+</main>
+
+
+
+<section id="about" class="bg-white py-16 px-4 md:px-16 lg:px-40" data-animate="fade-in-up">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div class="text-left">
+      <h2 class="text-md md:text-lg text-[#374151] mb-4 uppercase tracking-widest">About Me</h2>
+      <ul class="space-y-2 mb-6">
+        <li class="flex items-center">
+          <p class="text-4xl md:text-7xl text-[#6b7280]">Hi, I'm</p>
+        </li>
+        <li class="flex items-center">
+          <p class="text-4xl md:text-7xl text-[#6d28d9]">DanielKeme</p>
+        </li>
+        <li class="flex items-center pt-8">
+          <i class="fas fa-map-marker-alt mr-2 w-6 text-[#6d28d9]"></i>
+          <p class="text-lg text-[#6b7280]">Based in Abuja, Nigeria</p>
+        </li>
+        <li class="flex items-center">
+          <i class="fas fa-code mr-2 w-6 text-[#6d28d9]"></i>
+          <p class="text-lg text-[#6b7280]">Full-stack developer</p>
+        </li>
+        <li class="flex items-center">
+          <i class="fas fa-briefcase mr-2 w-6 text-[#6d28d9]"></i>
+          <p class="text-lg text-[#6b7280]">2+ years of experience</p>
+        </li>
+      </ul>
+      <p class="text-[#6b7280] mb-8">I specialize in building modern web applications using a variety of technologies. My passion lies in creating user-friendly and efficient solutions that solve real-world problems.</p>
+      <div class="flex space-x-4 mb-8">
+        <a href="#contact" class="border border-[#6d28d9] text-[#6d28d9] hover:bg-[#f3e8ff] px-6 py-3 font-semibold rounded-md transition duration-300">Get in Touch</a>
+        <a href="#projects" class="bg-[#6d28d9] hover:bg-[#5b21b6] text-white px-6 py-3 font-semibold rounded-md transition duration-300">View Projects</a>
+      </div>
+    </div>
+
+    <div class="text-left md:pt-18 md:pl-30" data-animate="fade-in-up" data-delay="200">
+      <p class="text-[#6b7280] mb-6 font-semibold text-2xl">Technologies I have been working with:</p>
+      <div class="grid grid-cols-1 gap-6">
+        <div data-animate="fade-in-up" data-delay="200">
+          <h3 class="text-[#6d28d9] font-semibold mb-2">Languages</h3>
+          <div class="flex flex-wrap gap-2 w-full">
+            <button class="bg-[#f3e8ff] text-[#6d28d9] border border-[#6d28d9] rounded-full px-4 py-2 text-sm font-medium hover:bg-[#e9d5ff] transition duration-300">JavaScript</button>
+            <button class="bg-[#f3e8ff] text-[#6d28d9] border border-[#6d28d9] rounded-full px-4 py-2 text-sm font-medium hover:bg-[#e9d5ff] transition duration-300">TypeScript</button>
+            <button class="bg-[#f3e8ff] text-[#6d28d9] border border-[#6d28d9] rounded-full px-4 py-2 text-sm font-medium hover:bg-[#e9d5ff] transition duration-300">Python</button>
+            <button class="bg-[#f3e8ff] text-[#6d28d9] border border-[#6d28d9] rounded-full px-4 py-2 text-sm font-medium hover:bg-[#e9d5ff] transition duration-300">CSS</button>
+            <button class="bg-[#f3e8ff] text-[#6d28d9] border border-[#6d28d9] rounded-full px-4 py-2 text-sm font-medium hover:bg-[#e9d5ff] transition duration-300">HTML</button>
+          </div>
+        </div>
+
+        <div data-animate="fade-in-up" data-delay="300">
+          <h3 class="text-[#6d28d9] font-semibold mb-2">Libraries & Frameworks</h3>
+          <div class="flex flex-wrap gap-2 w-full">
+            <button class="bg-[#f3e8ff] text-[#6d28d9] border border-[#6d28d9] rounded-full px-4 py-2 text-sm font-medium hover:bg-[#e9d5ff] transition duration-300">React</button>
+            <button class="bg-[#f3e8ff] text-[#6d28d9] border border-[#6d28d9] rounded-full px-4 py-2 text-sm font-medium hover:bg-[#e9d5ff] transition duration-300">Next.js</button>
+            <button class="bg-[#f3e8ff] text-[#6d28d9] border border-[#6d28d9] rounded-full px-4 py-2 text-sm font-medium hover:bg-[#e9d5ff] transition duration-300">Gatsby</button>
+            <button class="bg-[#f3e8ff] text-[#6d28d9] border border-[#6d28d9] rounded-full px-4 py-2 text-sm font-medium hover:bg-[#e9d5ff] transition duration-300">React Native</button>
+            <button class="bg-[#f3e8ff] text-[#6d28d9] border border-[#6d28d9] rounded-full px-4 py-2 text-sm font-medium hover:bg-[#e9d5ff] transition duration-300">Tailwind</button>
+          </div>
+        </div>
+
+        <div data-animate="fade-in-up" data-delay="400">
+          <h3 class="text-[#6d28d9] font-semibold mb-2">Tools & Plat
+
+
+
 <section class="bg-white py-16 px-4 md:px-16 lg:px-40" data-animate="fade-in-up" data-delay="200">
     <div class="max-w-4xl mx-auto">
         <h2 class="text-md md:text-lg text-gray-800 mb-12 uppercase tracking-widest text-center">Where I've Worked</h2>
@@ -155,7 +319,6 @@
 </section>
 
 
-<!-- projects -->
 <section id="projects" class="bg-gray-100 py-16 px-4 md:px-16 lg:px-40" data-animate="fade-in-up" data-delay="200">
     <div class="max-w-7xl mx-auto">
         <h2 class="text-lg text-gray-800 mb-8 uppercase tracking-widest text-left">Somethings I Have Built</h2>
@@ -174,7 +337,7 @@
                         <button class="bg-purple-100 text-purple-700 rounded-full px-4 py-2 text-xs font-light border border-purple-700 hover:border-purple-300 transition-colors duration-300">Payment Gateway</button>
                     </div>
                     <div class="pt-4">
-                        <a href="https://prostore-one.vercel.app/" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 font-semibold flex items-center justify-center">
+                        <a href="https://prostore-one.vercel.app/" class="bg-primary hover:bg-purple-700 text-white px-6 py-3 font-semibold flex items-center justify-center">
                             View Projects
                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -198,7 +361,7 @@
                         <button class="bg-purple-100 text-purple-700 rounded-full px-4 py-2 text-xs font-light border border-purple-700 hover:border-purple-300 transition-colors duration-300">Cloudinary API</button>
                     </div>
                     <div class="py-4">
-                        <a href="#" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 font-semibold flex items-center justify-center">
+                        <a href="#" class="bg-primary hover:bg-purple-700 text-white px-6 py-3 font-semibold flex items-center justify-center">
                             View Projects
                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -221,7 +384,7 @@
                         <button class="bg-purple-100 text-purple-700 rounded-full px-4 py-2 text-xs font-light border border-purple-700 hover:border-purple-300 transition-colors duration-300">Responsive Design</button>
                     </div>
                     <div class="py-4">
-                        <a href="https://alistbooking.com/" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 font-semibold flex items-center justify-center">
+                        <a href="https://alistbooking.com/" class="bg-primary hover:bg-purple-700 text-white px-6 py-3 font-semibold flex items-center justify-center">
                             View Projects
                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -236,7 +399,6 @@
 </section>
 
 
-<!-- contact me -->
 <section id="contact" class="bg-gray-800 py-16 px-4 md:px-16 lg:px-40 text-white" data-animate="fade-in-up" data-delay="200">
     <div class="max-w-7xl mx-auto">
         <div class="text-center mb-12">
@@ -259,8 +421,6 @@
                         <p class="text-xs text-gray-500">Response time: Within 24 Hours</p>
                     </div>
                 </div>
-
-                
             </div>
 
             <div>
@@ -277,15 +437,12 @@
                         <label for="message" class="block text-sm font-medium text-gray-300">Message</label>
                         <textarea id="message" name="message" rows="4" class="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600"></textarea>
                     </div>
-                    <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-md font-semibold w-full">Send Message</button>
+                    <button type="submit" class="bg-primary hover:bg-purple-700 text-white px-6 py-3 rounded-md font-semibold w-full">Send Message</button>
                 </form>
             </div>
         </div>
     </div>
 </section>
-
-
-<!-- footer -->
 
 
 <footer class="bg-gray-800 py-6 px-4 md:px-16 lg:px-40 text-white relative">
@@ -303,5 +460,6 @@
 
 
 <script src="script.js"></script>
+
 </body>
 </html>
