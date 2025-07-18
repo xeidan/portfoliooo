@@ -207,3 +207,53 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+
+function sendMail() {
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const message = document.getElementById("message").value.trim();
+
+  if (!name || !email || !message) {
+    alert("Please fill in all fields.");
+    return;
+  }
+
+  const subject = encodeURIComponent("Portfolio Contact from " + name);
+  const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+
+  window.location.href = `mailto:dnielkeme@gmail.com?subject=${subject}&body=${body}`;
+}
+
+
+//contact js
+const form = document.getElementById("contact-form");
+  const successMsg = document.getElementById("form-success");
+  const errorMsg = document.getElementById("form-error");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const message = document.getElementById("message").value.trim();
+
+    try {
+      const res = await fetch("https://xeidan-contact-api-7de163ab68d6.herokuapp.com/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      if (res.ok) {
+        form.reset();
+        successMsg.classList.remove("hidden");
+        errorMsg.classList.add("hidden");
+      } else {
+        throw new Error();
+      }
+    } catch (err) {
+      successMsg.classList.add("hidden");
+      errorMsg.classList.remove("hidden");
+    }
+  });
