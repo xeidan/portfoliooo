@@ -172,7 +172,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-1">
       <div class="flex items-center justify-between h-16">
         <div class="flex items-center">
-          <a href="#"><img class="h-10 w-auto" src="zdan-logo.png" alt="Logo"></a> 
+          <a href="#"><img class="h-6 w-auto" src="zdan-logo.png" alt="Logo"></a> 
         </div>
         <div class="flex items-center">
           <div class="hidden md:flex space-x-4">
@@ -211,8 +211,8 @@
         <h2>CV Options</h2>
         <p>Would you like to view or download my CV?</p>
         <div class="flex flex-col gap-6">
-            <a href="cv.pdf" target="_blank">View CV</a>
-            <a href="cv.pdf" download>Download CV</a>
+            <a href="danielkeme.docx" target="_blank">View CV</a>
+            <a href="danielkeme.docx" download>Download CV</a>
         </div>
     </div>
 </div>
@@ -405,7 +405,7 @@
       <h2 class="text-md md:text-lg text-[#374151] mb-4 uppercase tracking-widest" data-animate="fade-in-up">
         Get In Touch
       </h2>
-      <h3 class="text-4xl md:text-5xl font-bold text-[#6b7280] mb-4 leading-tight" data-animate="fade-in-up" data-delay="100">
+      <h3 class="text-4xl md:text-5xl font-thin text-[#6b7280] mb-4 leading-tight" data-animate="fade-in-up" data-delay="100">
         Let's Create Something Together
       </h3>
       <p class="text-[#6b7280] mt-4 max-w-lg mx-auto leading-relaxed" data-animate="fade-in-up" data-delay="200">
@@ -415,34 +415,9 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
       <div class="pt-6" data-animate="fade-in-up" data-delay="300">
-        <div class="flex items-start mb-8">
-          <div class="bg-[#f3e8ff] p-4 rounded-full mr-5 flex-shrink-0">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#6d28d9]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-            </svg>
-          </div>
-          <div>
-            <h4 class="font-semibold text-xl text-[#374151]">Email Me</h4>
-            <a href="mailto:dnielkeme@gmail.com" class="text-[#6b7280] text-lg hover:text-[#6d28d9] transition-colors duration-300">dnielkeme@gmail.com</a>
-            <p class="text-gray-500 text-sm mt-1">Response time: Within 24 hours</p>
-          </div>
-        </div>
 
-        <div class="flex items-start mb-8">
-          <div class="bg-[#f3e8ff] p-4 rounded-full mr-5 flex-shrink-0">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#6d28d9]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.828 0L6.343 16.657a8 8 0 1111.314 0z" />
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-          </div>
-          <div>
-            <h4 class="font-semibold text-xl text-[#374151]">Location</h4>
-            <p class="text-[#6b7280] text-lg">Abuja, Federal Capital Territory, Nigeria</p>
-          </div>
-        </div>
 
         <div class="mt-8 pt-6 border-t border-gray-200">
-          <h5 class="font-semibold text-xl text-[#374151] mb-4">Find Me On</h5>
           <div class="flex space-x-5">
             <a href="#" aria-label="LinkedIn Profile" class="text-gray-500 hover:text-[#6d28d9] transition-colors duration-300 transform hover:scale-110">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="currentColor" viewBox="0 0 24 24">
@@ -463,42 +438,55 @@
         </div>
       </div>
 
-      <div class="bg-white p-8  " data-animate="fade-in-up" data-delay="400">
+      <div class="bg-white p-8" data-animate="fade-in-up" data-delay="400">
         <h4 class="font-bold text-2xl text-[#374151] mb-6">Send Me a Message</h4>
-        <form id="contact-form-main" class="space-y-6">
-          <div>
+        <form id="contact-form-main">
+          
+          <!-- Full Name -->
+          <div class="mb-6">
             <label for="name-contact" class="block text-sm font-medium text-gray-700 mb-2">
               Full Name<span class="text-red-500">*</span>
             </label>
             <input type="text" id="name-contact" name="name"
-              class="w-full px-4 py-2 rounded-md bg-white text-gray-800 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#6d28d9] focus:border-[#6d28d9] transition duration-300 placeholder-gray-400"
+              class="w-full px-4 py-2 bg-white text-gray-800 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#6d28d9] focus:border-[#6d28d9] transition duration-300 placeholder-gray-400"
               placeholder="Your Name" required />
           </div>
-          <div>
+      
+          <!-- Email Address -->
+          <div class="mb-6">
             <label for="email-contact" class="block text-sm font-medium text-gray-700 mb-2">
               Email Address<span class="text-red-500">*</span>
             </label>
             <input type="email" id="email-contact" name="email"
-              class="w-full px-4 py-2 rounded-md bg-white text-gray-800 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#6d28d9] focus:border-[#6d28d9] transition duration-300 placeholder-gray-400"
+              class="w-full px-4 py-2 bg-white text-gray-800 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#6d28d9] focus:border-[#6d28d9] transition duration-300 placeholder-gray-400"
               placeholder="name@example.com" required />
           </div>
-          <div>
-          <div>
+      
+          <!-- Message -->
+          <div class="mb-6">
             <label for="message-contact" class="block text-sm font-medium text-gray-700 mb-2">
               Your Message<span class="text-red-500">*</span>
             </label>
             <textarea id="message-contact" name="message" rows="5"
-              class="w-full px-4 py-2 rounded-md bg-white text-gray-800 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#6d28d9] focus:border-[#6d28d9] transition duration-300 resize-y placeholder-gray-400"
+              class="w-full px-4 py-2 bg-white text-gray-800 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#6d28d9] focus:border-[#6d28d9] transition duration-300 resize-y placeholder-gray-400"
               placeholder="Describe your project or inquiry in detail..." required></textarea>
           </div>
-          <button type="submit"
-            class="w-full bg-[#6d28d9] hover:bg-[#5b21b6] text-white font-semibold py-3 px-6 rounded-md transition duration-300 ease-in-out transform hover:translate-y-[-2px] hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#6d28d9] focus:ring-offset-2 focus:ring-offset-white">
-            Send Message
-          </button>
+      
+          <!-- Submit Button -->
+          <div class="text-center pt-8">
+            <button type="submit"
+              class="w-24 bg-[#6d28d9] hover:bg-[#5b21b6] text-white font-semibold py-3 px-6 transition duration-300 ease-in-out transform hover:translate-y-[-2px] hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#6d28d9] focus:ring-offset-2 focus:ring-offset-white">
+              Send Message
+            </button>
+          </div>
+      
+          <!-- Messages -->
           <p id="form-success-main" class="text-green-600 text-center mt-4 text-sm hidden">✅ Your message was sent successfully!</p>
           <p id="form-error-main" class="text-red-600 text-center mt-4 text-sm hidden">❌ Something went wrong. Please try again.</p>
         </form>
       </div>
+      
+      
     </div>
   </div>
 </section>
@@ -506,7 +494,7 @@
 
 <footer class="bg-gray-800 py-16 px-4 md:px-16 lg:px-40 text-gray-200 relative border-t border-gray-200">
   <div class="border-t border-gray-200 pt-8 mt-12 text-center text-gray-500 text-sm">
-    <p>&copy; <span id="current-year-footer"></span> DanielKeme. All rights reserved.</p>
+    <p>&copy; <span id="current-year-footer"></span> 2025 . All rights reserved.</p>
     <p class="mt-2">Designed and Developed with Passion.</p>
   </div>
     <a href="#top" id="backToTopBtn" class="fixed bottom-8 right-8 bg-[#6d28d9] hover:bg-[#5b21b6] p-3 rounded-full flex items-center justify-center opacity-0 transition-opacity duration-300 z-40 shadow-lg">
