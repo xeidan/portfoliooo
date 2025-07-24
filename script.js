@@ -253,16 +253,17 @@ function sendMail() {
 
 
 //contact js
-const form = document.getElementById("contact-form");
-  const successMsg = document.getElementById("form-success");
-  const errorMsg = document.getElementById("form-error");
+const form = document.getElementById("contact-form-main");
+const successMsg = document.getElementById("form-success-main");
+const errorMsg = document.getElementById("form-error-main");
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const message = document.getElementById("message").value.trim();
+    const name = document.getElementById("name-contact").value.trim();
+const email = document.getElementById("email-contact").value.trim();
+const message = document.getElementById("message-contact").value.trim();
+
 
     try {
       const res = await fetch("https://xeidan-contact-api-7de163ab68d6.herokuapp.com/contact", {
