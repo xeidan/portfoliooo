@@ -1,4 +1,4 @@
-// Existing JS from your file
+//js
 const menuBtn = document.getElementById('mobile-menu-button');
 const mobileMenu = document.getElementById('mobile-menu');
 const iconHamburger = document.getElementById('icon-hamburger');
@@ -103,9 +103,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (details) {
                 let detailsHTML = `
-                    <h3 class="text-xl font-semibold mb-2">${details.title}</h3>
-                    <p class="text-gray-600 mb-4">${details.dates}</p>
-                    <ul class="space-y-2 text-gray-600">
+                    <h3 class="text-xl font-semibold mb-2 text-[#6b7280]">${details.title}</h3>
+                    <p class="text-[#6b7280] mb-4">${details.dates}</p>
+                    <ul class="space-y-2 text-[#6b7280]">
                         ${details.details.map(item => `
                             <li class="flex items-start">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 mt-1.5 text-primary flex-shrink-0" width="10" height="12" viewBox="0 0 10 12" fill="none">

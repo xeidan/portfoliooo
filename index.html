@@ -211,8 +211,11 @@
         <h2>CV Options</h2>
         <p>Would you like to view or download my CV?</p>
         <div class="flex flex-col gap-6">
-            <a href="danielkeme.docx" target="_blank">View CV</a>
-            <a href="danielkeme.docx" download>Download CV</a>
+          <a href="Daniel Keme CV.pdf" target="_blank" rel="noopener noreferrer"
+          class="bg-[#6d28d9] text-white px-6 py-3 rounded-md font-medium hover:bg-[#5b21b6] transition">
+          View CV
+       </a>       
+            <a href="Daniel Keme CV.pdf" download>Download CV</a>
         </div>
     </div>
 </div>
@@ -243,7 +246,7 @@
 
 
 
-<section id="about" class="bg-white py-16 px-4 md:px-16 lg:px-40" data-animate="fade-in-up">
+<section id="about" class="bg-white text-center py-16 px-4 md:px-16 lg:px-40" data-animate="fade-in-up">
   <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
     <div class="text-left">
       <h2 class="text-md md:text-lg text-[#374151] mb-4 uppercase tracking-widest">About Me</h2>
@@ -264,7 +267,7 @@
         </li>
         <li class="flex items-center">
           <i class="fas fa-briefcase mr-2 w-6 text-[#6d28d9]"></i>
-          <p class="text-lg text-[#6b7280]">2+ years of experience</p>
+          <p class="text-lg text-[#6b7280]">3+ years of experience</p>
         </li>
       </ul>
       <p class="text-[#6b7280] mb-8">I specialize in building modern web applications using a variety of technologies. My passion lies in creating user-friendly and efficient solutions that solve real-world problems.</p>
@@ -300,13 +303,29 @@
         </div>
 
         <div data-animate="fade-in-up" data-delay="400">
-          <h3 class="text-[#6d28d9] font-semibold mb-2">Tools & Plat
+          <h3 class="text-[#6d28d9] font-semibold mb-2">Tools & Platforms</h3>
+          <div class="flex flex-wrap gap-2 w-full">
+            <button class="bg-[#f3e8ff] text-[#6d28d9] border border-[#6d28d9] rounded-full px-4 py-2 text-sm font-medium hover:bg-[#e9d5ff] transition duration-300">Git & GitHub</button>
+            <button class="bg-[#f3e8ff] text-[#6d28d9] border border-[#6d28d9] rounded-full px-4 py-2 text-sm font-medium hover:bg-[#e9d5ff] transition duration-300">Vercel</button>
+            <button class="bg-[#f3e8ff] text-[#6d28d9] border border-[#6d28d9] rounded-full px-4 py-2 text-sm font-medium hover:bg-[#e9d5ff] transition duration-300">Netlify</button>
+            <button class="bg-[#f3e8ff] text-[#6d28d9] border border-[#6d28d9] rounded-full px-4 py-2 text-sm font-medium hover:bg-[#e9d5ff] transition duration-300">Heroku</button>
+            <button class="bg-[#f3e8ff] text-[#6d28d9] border border-[#6d28d9] rounded-full px-4 py-2 text-sm font-medium hover:bg-[#e9d5ff] transition duration-300">PostgreSQL</button>
+            <button class="bg-[#f3e8ff] text-[#6d28d9] border border-[#6d28d9] rounded-full px-4 py-2 text-sm font-medium hover:bg-[#e9d5ff] transition duration-300">SendGrid</button>
+            <button class="bg-[#f3e8ff] text-[#6d28d9] border border-[#6d28d9] rounded-full px-4 py-2 text-sm font-medium hover:bg-[#e9d5ff] transition duration-300">Figma</button>
+            <button class="bg-[#f3e8ff] text-[#6d28d9] border border-[#6d28d9] rounded-full px-4 py-2 text-sm font-medium hover:bg-[#e9d5ff] transition duration-300">Wordpress</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
+
+
 
 
 <section class="bg-white py-16 px-4 md:px-16 lg:px-40" data-animate="fade-in-up" data-delay="200">
     <div class="max-w-4xl mx-auto">
-        <h2 class="text-md md:text-lg text-[#374151] mb-4 uppercase tracking-widest">Where I've Worked</h2>
+        <h2 class="text-md md:text-lg text-[#374151] text-center mb-8 uppercase tracking-widest">Where I've Worked</h2>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8">
             <div class="flex flex-col border-r border-gray-200 pr-4 lg:pr-8">
                 <button class="company-btn text-lg text-left py-2 hover:text-purple-600 transition-colors duration-300" data-company="metacap">Metacap Technology</button>
@@ -322,7 +341,7 @@
 
 <section id="projects" class="bg-gray-100 py-16 px-4 md:px-16 lg:px-40" data-animate="fade-in-up" data-delay="200">
     <div class="max-w-7xl mx-auto">
-        <h2 class="text-md md:text-lg text-[#374151] mb-4 uppercase tracking-widest">Somethings I Have Built</h2>
+        <h2 class="text-md md:text-lg text-[#374151] text-center mb-8 uppercase tracking-widest">Somethings I Have Built</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
             <div class="bg-white rounded-lg shadow-md overflow-hidden" data-animate="fade-in-up" data-delay="300">
@@ -400,14 +419,12 @@
 </section>
 
 <section id="contact" class="bg-white py-16 px-4 md:px-16 lg:px-40" data-animate="fade-in-up" data-delay="200">
-  <h2 class="text-md md:text-lg text-[#374151] mb-4 uppercase tracking-widest" data-animate="fade-in-up">
+  <h2 class="text-md md:text-lg text-[#374151] text-center mb-4 uppercase tracking-widest" data-animate="fade-in-up">
     Get In Touch
   </h2>
   <div class="max-w-4xl mx-auto">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+      <div class="text-center mb-12 md:mb-0 items">
 
-      <!-- Left Column: Heading Content -->
-      <div class="md:text-left">
         <h3 class="text-4xl md:text-5xl font-thin text-[#6b7280] mb-4 leading-tight" data-animate="fade-in-up" data-delay="100">
           Let's Create Something Together
         </h3>
@@ -418,7 +435,6 @@
 
       <!-- Right Column: Contact Form -->
       <div class="bg-white p-8" data-animate="fade-in-up" data-delay="400">
-        <h4 class="font-bold text-2xl text-[#374151] mb-6">Send Me a Message</h4>
         <form id="contact-form-main">
           <!-- Full Name -->
           <div class="mb-6">
@@ -465,9 +481,7 @@
       </div>
 
     </div>
-  </div>
 </section>
-
 
 
 
