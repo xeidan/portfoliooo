@@ -132,15 +132,41 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-window.onscroll = function() {scrollFunction()};
+window.onscroll = function () {
+  scrollFunction();
+};
 
 function scrollFunction() {
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        document.getElementById("backToTopBtn").style.opacity = "1";
-    } else {
-        document.getElementById("backToTopBtn").style.opacity = "0"; // Corrected to hide button
-    }
+  const btn = document.getElementById("backToTopBtn");
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    btn.style.opacity = "1";
+  } else {
+    btn.style.opacity = "0";
+  }
 }
+
+// Smooth scroll to top
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth' // <-- This makes it smooth
+  });
+}
+
+function scrollToTopSlow(event) {
+  event.preventDefault(); // <--- this stops the instant jump
+
+  const scrollStep = -window.scrollY / 50; // slower = bigger divisor
+  function scrollLoop() {
+    if (window.scrollY > 0) {
+      window.scrollBy(0, scrollStep);
+      requestAnimationFrame(scrollLoop);
+    }
+  }
+  scrollLoop();
+}
+
+
 
 
 // ✅ NEW JAVASCRIPT FOR CV MODAL ANIMATIONS AND BEHAVIOR
